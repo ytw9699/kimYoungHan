@@ -13,6 +13,13 @@ public class Member {
     @Column(name="name")//맵핑
     private String name;
 
+    public Member(){} //jpa는 리플렉션을 쓰기에 기본생성자 있어야함
+
+    public Member(Long id, String name){//생성자
+        this.id = id;
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }
