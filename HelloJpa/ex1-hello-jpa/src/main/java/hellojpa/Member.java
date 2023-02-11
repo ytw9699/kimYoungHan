@@ -1,9 +1,7 @@
 package hellojpa;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity//jpa가 로딩될때 jpa를 사용하는 애로인식하고 관리한다.
 @Table(name = "Member")//맵핑
@@ -12,7 +10,22 @@ public class Member {
     private Long id;
     @Column(name="name", unique = true, length = 20)//맵핑
     private String name;
+
+    @Column(name="phoneNum", columnDefinition = "varchar(100) default 'EMPTY'")
+    private String phoneNum;
+
+    @Column(updatable = false)//업데이트 반영안되게
     private int age;
+    @Enumerated(EnumType.STRING)
+    private RoleType roleType;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updateDate;
+    @Lob
+    private String description;
+    @Transient
+    private int temp;//메모리에만 있음 캐싱필요할때
 
     public Member(){} //jpa는 리플렉션을 쓰기에 기본생성자 있어야함
 
