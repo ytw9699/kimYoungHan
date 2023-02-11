@@ -21,7 +21,11 @@
             <!--쿼리 포맷팅 해줌-->
             <property name="hibernate.use_sql_comments" value="true"/>
             <!--쿼리가 왜나왔는지 주석처리해서보여줌-->
+
             <!--<property name="hibernate.hbm2ddl.auto" value="create" />-->
+            <!--creates는 시작시에 테이블을 지웠다가 다시생성함 drop table Member if exists-->
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+
         </properties>
     </persistence-unit>
 </persistence>

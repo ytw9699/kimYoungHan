@@ -10,8 +10,9 @@ import javax.persistence.Table;
 public class Member {
     @Id
     private Long id;
-    @Column(name="name")//맵핑
+    @Column(name="name", unique = true, length = 20)//맵핑
     private String name;
+    private int age;
 
     public Member(){} //jpa는 리플렉션을 쓰기에 기본생성자 있어야함
 
