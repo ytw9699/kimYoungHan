@@ -9,6 +9,7 @@
             <property name="javax.persistence.jdbc.user" value="sa"/>
             <property name="javax.persistence.jdbc.password" value=""/>
             <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/jpashop"/>
+            <!--jdbc url h2 에서 다음과 같이 설정 jdbc:h2:~/jpashop-->
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <property name="hibernate.jdbc.batch_size" value="10"/>
             <!--디비에 버퍼링 사이즈 10-->
