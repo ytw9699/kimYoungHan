@@ -24,7 +24,7 @@
 
             <!--<property name="hibernate.hbm2ddl.auto" value="create" />-->
             <!--creates는 시작시에 테이블을 지웠다가 다시생성함 drop table Member if exists-->
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
 
         </properties>
     </persistence-unit>
