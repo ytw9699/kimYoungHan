@@ -1,0 +1,23 @@
+server:
+  port: 8089
+
+spring:
+  datasource:
+  url: jdbc:h2:tcp://localhost/~/test
+  #url: jdbc:h2:tcp://localhost/~/datajpa
+  username: sa
+  password:
+  driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create # 마지막에 애플리케이션 내려가도 테이블 남겨두고 로딩시점에 테이블 드랍하고 생성
+    properties:
+      hibernate:
+        #show_sql: true > jpa 실행쿼리 콘솔에 찍음
+        format_sql: true
+        
+logging.level:
+  org.hibernate.SQL: debug # 로그파일로 남김
+  # org.hibernate.type: trace
+  # 파라미터 바인딩 까지 볼 수있으나 가독성 안좋음 > 차라리 p6spy쓰자
