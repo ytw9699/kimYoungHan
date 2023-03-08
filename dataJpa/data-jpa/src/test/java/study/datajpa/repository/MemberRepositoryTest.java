@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.*;
 @Rollback(value = false)
 class MemberRepositoryTest {
     @Autowired
-    MemberRepository repository;
+    MemberRepository repository;//스프링이 구현체를 인젝션 해줌
 
     @Test
     public void testMember(){
