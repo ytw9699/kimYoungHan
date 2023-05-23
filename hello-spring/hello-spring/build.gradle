@@ -15,9 +15,12 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	/*톰캣 + 스프링 웹 mvc*/
+	/*spring-boot-starter (공통) > 스프링 부트 + 스프링 코어 + 로깅 ( logback, slf4j)*/
 	testImplementation ('org.springframework.boot:spring-boot-starter-test'){
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}	/*junit 5버전*/
+	}	/*junit 5버전 테스트 프레임워크, 모키토, assertj, spring-test>스프링통합테스트지원*/
+	/*https://www.notion.so/5-24-ea370445b5564a699a35522ccf425395*/
 }
 
 test{
