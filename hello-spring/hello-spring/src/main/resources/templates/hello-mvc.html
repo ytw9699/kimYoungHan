@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8"/>
+</head>
+<body>
+    <p th:text="'hello' + ${name}" >hello. empty</p>
+    <!--타임리프의 장점! hello. empty을 html작업하는 사람이 마크업으로 쓰면서
+     만약 스프링에서 타임리프 템플릿 엔진 처리할때는 name 값이 있으면 치환이 된다.-->
+</body>
+</html>
