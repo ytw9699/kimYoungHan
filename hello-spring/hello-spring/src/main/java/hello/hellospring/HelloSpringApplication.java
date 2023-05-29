@@ -1,4 +1,4 @@
-package hello.hellospring;
+package hello.hellospring;//이 패키지 하위를 스프링이 찾아서 컴포넌트로 등록한다
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
