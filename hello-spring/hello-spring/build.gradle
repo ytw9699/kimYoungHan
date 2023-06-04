@@ -21,6 +21,8 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}	/*junit 5버전 테스트 프레임워크, 모키토, assertj, spring-test>스프링통합테스트지원*/
 	/*https://www.notion.so/5-24-ea370445b5564a699a35522ccf425395*/
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	runtimeOnly 'com.h2database:h2'
 }
 
 test{
