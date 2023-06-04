@@ -3,8 +3,7 @@ package hello.hellospring.config;
 
 import hello.hellospring.repository.JdbcMemberRepository;
 import hello.hellospring.repository.MemberRepository;
-import hello.hellospring.repository.MemoryMemberRepository;
-import hello.hellospring.service.MemverService;
+import hello.hellospring.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,8 +20,8 @@ public class SpringConfig {
     }
 
     @Bean
-    public MemverService memverService(){
-        return new MemverService(memberRepository());
+    public MemberService memverService(){
+        return new MemberService(memberRepository());
     }
 
     @Bean
