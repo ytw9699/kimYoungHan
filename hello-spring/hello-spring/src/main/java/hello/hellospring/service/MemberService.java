@@ -23,11 +23,28 @@ public class MemberService {
     /**
      * 회원가입 : 같은 이름이 있는 중복 회원 안됨
      */
-    public Long join(Member member){//네이밍 비지니스적
+    /*public Long join(Member member){//네이밍 비지니스적
 
         validateDuplicateMember(member);
 
         memberRepository.save(member);
+
+        return member.getId();
+    }*/
+
+    public Long join(Member member){//회원가입 시간 측정 이런 로직들이 메소드 마다 들어가야한다면?필요한것은 AOP
+
+        long start = System.currentTimeMillis();
+
+        try {
+            validateDuplicateMember(member);
+
+            memberRepository.save(member);
+        }finally {
+            long finish = System.currentTimeMillis();
+            long timeMs = finish - start;
+            System.out.println("join =" + timeMs + "ms");
+        }
 
         return member.getId();
     }
