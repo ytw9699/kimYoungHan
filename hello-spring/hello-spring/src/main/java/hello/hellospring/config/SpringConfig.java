@@ -18,10 +18,10 @@ public class SpringConfig {
 
     private final MemberRepository memberRepository;
 
-    @Bean
+    /*@Bean
     public TimeTraceAop timeTraceAop() {
         return new TimeTraceAop();
-    }
+    }*/
 
     @Autowired
     public SpringConfig(MemberRepository memberRepository) {

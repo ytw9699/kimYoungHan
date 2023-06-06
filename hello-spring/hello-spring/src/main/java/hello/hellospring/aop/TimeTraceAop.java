@@ -5,7 +5,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 @Aspect//Aop는 Aspect어노테이션 붙여야 함.
-//@Component//이 클래스를 스프링 빈에 등록해 줄 때 @Component를 붙여주면 ConponemtScan으로 등록되고
+@Component//이 클래스를 스프링 빈에 등록해 줄 때 @Component를 붙여주면 ConponemtScan으로 등록되고
 // spring bean에 직접 등록해줘도 됨.(이것을 더 선호함)
 public class TimeTraceAop {
     //@Around("execution(* hello.hellospring..*(..))")

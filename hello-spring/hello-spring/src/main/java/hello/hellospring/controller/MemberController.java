@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import java.util.List;
 
 @Controller
@@ -19,6 +18,9 @@ public class MemberController {
     @Autowired
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
+        System.out.println("memberService"+memberService.getClass());//프록시 주입 확인 , 스프링은 프록시 방식의 aop를 사용
+        //memberServiceclass hello.hellospring.service.MemberService$$EnhancerBySpringCGLIB$$2c4ffa81
+        //memberService를 복제해서 코드 조작 프록시 기술 aop
     }
 
     @GetMapping("/members/new")
