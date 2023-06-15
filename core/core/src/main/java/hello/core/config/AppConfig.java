@@ -11,7 +11,7 @@ import hello.core.order.OrderServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+@Configuration//싱글톤을 유지하게 해준다
 public class AppConfig {
 
     @Bean(name = "memberService")
