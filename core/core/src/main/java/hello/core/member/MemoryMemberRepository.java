@@ -1,9 +1,12 @@
 package hello.core.member;
 
+import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.Map;
 
 //아직 db가 확정이 안됐기 때문에 memorymemberRepository를 만들었음
+@Component
 public class MemoryMemberRepository implements MemberRepository {
 
     private static Map<Long, Member> store = new HashMap<>();//동시에 접근할때는 concurrenthashmap써야함
