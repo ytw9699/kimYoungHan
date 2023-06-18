@@ -6,9 +6,10 @@ import org.springframework.context.annotation.FilterType;
 
 @Configuration
 @ComponentScan(
-        basePackages = "hello.core",
+        basePackages = "hello.core",//아무것도 지정하지않으면 이 ComponentScan이 붙은 클래스 하위로 찾음
+        //basePackageClasses = AutoAppConfig.class, //지정한 클래스가 있는 패키지 하위로 찾는것
         excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes=Configuration.class)
-        //@Component가 붙은 클래스를 모두 빈으로 등록해준다                                //Configuration애노테이션 붙은 클래스만 대상에서 제외
+        //@Component,controller, service, repository, Configuration// Configuration애노테이션 붙은 클래스만 대상에서 제외
 )
 public class AutoAppConfig {
 }
