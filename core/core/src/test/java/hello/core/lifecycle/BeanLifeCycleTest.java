@@ -18,7 +18,8 @@ class BeanLifeCycleTest {
     @Configuration
     static class LifeCycleConfig {
 
-        @Bean(initMethod = "init", destroyMethod = "close")
+        //@Bean(initMethod = "init", destroyMethod = "close")
+        @Bean
         public NetworkClient networkClient() {//빈등록
             NetworkClient networkClient = new NetworkClient();
             networkClient.setUrl("http://hello-spring.dev");//가짜로 적음
