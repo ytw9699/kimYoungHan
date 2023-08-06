@@ -2,11 +2,14 @@ package hello.core.scope;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.ObjectFactory;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Scope;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.inject.Provider;
 
 public class SingletonWithPrototypeTest1 {
 
@@ -36,11 +39,11 @@ public class SingletonWithPrototypeTest1 {
 
         ClientBean singletonBean2 = ac.getBean(ClientBean.class);
         int count2 = singletonBean2.logic();
-        assertThat(count2).isEqualTo(2);
+        assertThat(count2).isEqualTo(1);
     }
 
 
-    @Scope("singleton")
+ /*   @Scope("singleton")
     static class ClientBean{
 
         private final PrototypeBean prototypeBean;
@@ -51,12 +54,39 @@ public class SingletonWithPrototypeTest1 {
         }
 
         public int logic() {
+
             prototypeBean.addCount();
             int count =  prototypeBean.getCount();
             return count;
         }
+    }*/
 
+    @Scope("singleton")
+    static class ClientBean{
+        @Autowired
+        private ObjectProvider<PrototypeBean> prototypeBeanProvider;
+        //private ObjectFactory<PrototypeBean> prototypeBeanProvider;
+
+        public int logic() {
+            PrototypeBean prototypeBean = prototypeBeanProvider.getObject();
+            prototypeBean.addCount();
+            int count =  prototypeBean.getCount();
+            return count;
+        }
     }
+
+    /*@Scope("singleton")
+    static class ClientBean{
+        @Autowired
+        private Provider<PrototypeBean> prototypeBeanProvider;
+
+        public int logic() {
+            PrototypeBean prototypeBean = prototypeBeanProvider.get();
+            prototypeBean.addCount();
+            int count =  prototypeBean.getCount();
+            return count;
+        }
+    }*/
 
     @Scope("prototype")
     static class PrototypeBean {
@@ -66,7 +96,6 @@ public class SingletonWithPrototypeTest1 {
         public void addCount() {
             count++;
         }
-
         public int getCount() {
             return count;
         }
