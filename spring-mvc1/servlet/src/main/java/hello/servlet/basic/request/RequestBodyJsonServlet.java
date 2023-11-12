@@ -16,7 +16,7 @@ import java.nio.charset.StandardCharsets;
 public class RequestBodyJsonServlet extends HttpServlet {
 
     private ObjectMapper objectMapper = new ObjectMapper();
-    
+
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
