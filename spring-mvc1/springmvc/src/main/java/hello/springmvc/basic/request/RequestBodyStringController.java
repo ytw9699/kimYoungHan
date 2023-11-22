@@ -58,5 +58,6 @@ public class RequestBodyStringController {
         log.info("messageBody={}", messageBody);
         return "ok";
         //http 메시지 컨버터는 http메시지를 읽어서 조작해서 처리해주는것
+        //RequestBody나 httpentity 사용하면 http 메시지 컨버터가 http 메시지 바디의 내용을 우리가 원하는문자나 객체등으로 변환
     }
 }
