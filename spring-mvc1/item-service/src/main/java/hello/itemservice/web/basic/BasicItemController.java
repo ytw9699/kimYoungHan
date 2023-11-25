@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.annotation.PostConstruct;
 import java.util.List;
 
@@ -87,6 +88,15 @@ public class BasicItemController {
     public String addItemV5(Item item) {
         itemRepository.save(item);
         return "redirect:/basic/items/" + item.getId();//이렇게 변수를 더하는것은 url 인코딩안되는 문제 생김
+        //String encodedParam = URLEncoder.encode(item.getId(), "UTF-8"); 이를 생략하는게 문제, 숫자는 문제없지만 한글일 경우 문제생김
+    }
+
+    @PostMapping("/add")
+    public String addItemV6(Item item, RedirectAttributes redirectAttributes) {
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());//url 인코딩해주고 치환
+        redirectAttributes.addAttribute("status", true);//치환안된거는 쿼리 파라미터로 자동 붙음
+        return "redirect:/basic/items/{itemId}";//itemId는 치환됨
     }
 
     @GetMapping("/{itemId}/edit")
