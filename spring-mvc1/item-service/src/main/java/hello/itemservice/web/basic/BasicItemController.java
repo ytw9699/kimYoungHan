@@ -38,5 +38,50 @@ public class BasicItemController {
         model.addAttribute("item", item);
         return "basic/item";
     }
+
+    @GetMapping("/add")
+    public String addForm() {
+        return "basic/addForm";
+    }
+
+    @PostMapping("/add")
+    public String addItemV1(@RequestParam String itemName,
+                            @RequestParam Integer price,
+                            @RequestParam int quantity,
+                            Model model) {
+
+        Item item = new Item();
+             item.setItemName(itemName);
+             item.setPrice(price);
+             item.setQuantity(quantity);
+
+        itemRepository.save(item);
+
+        model.addAttribute("item", item);
+
+        return "basic/item";
+    }
+
+    @PostMapping("/addItemV2")
+    public String addItemV2(@ModelAttribute("item") Item item, Model model) {
+
+        itemRepository.save(item);
+        model.addAttribute("item", item);
+        return "basic/item";
+    }
+
+    @PostMapping("/addItemV3")
+    public String addItemV3(@ModelAttribute Item item) {
+        itemRepository.save(item);
+        //model.addAttribute("item", item); //자동 추가, 생략 가능 Item 가 > item으로 모델에 들어감
+        return "basic/item";
+    }
+
+    @PostMapping("/addItemV4")
+    public String addItemV4(Item item) {//객체의 경우 ModelAttribute가 적용되어 생략가능
+        itemRepository.save(item);
+        return "basic/item";
+    }
+
 }
 
