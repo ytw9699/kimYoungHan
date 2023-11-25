@@ -44,7 +44,7 @@ public class BasicItemController {
         return "basic/addForm";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/addItemV1")
     public String addItemV1(@RequestParam String itemName,
                             @RequestParam Integer price,
                             @RequestParam int quantity,
@@ -81,6 +81,12 @@ public class BasicItemController {
     public String addItemV4(Item item) {//객체의 경우 ModelAttribute가 적용되어 생략가능
         itemRepository.save(item);
         return "basic/item";
+    }
+
+    @PostMapping("/addItemV5")
+    public String addItemV5(Item item) {
+        itemRepository.save(item);
+        return "redirect:/basic/items/" + item.getId();//이렇게 변수를 더하는것은 url 인코딩안되는 문제 생김
     }
 
     @GetMapping("/{itemId}/edit")
