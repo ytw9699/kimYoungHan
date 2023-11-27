@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!--자바스크립트에서 타임리프를 편리하게 사용할 수 있는 자바스크립트 인라인 기능-->
+    <!-- 자바스크립트 인라인 사용 전 -->
+    <script>
+
+        var username = [[${user.username}]];//이건 오류생김
+        var username2 = "[[${user.username}]]";//사실 이렇게 해야 정상적으로 문자로 들어감
+        var age = [[${user.age}]];
+
+        //자바스크립트 내추럴 템플릿
+        var username2 = /*[[${user.username}]]*/ "test username";//치환안됨 , test username 이 값이 들어감
+
+        //객체
+        var user = [[${user}]];//tostring 값 그대로 출력되버림 var user = {"username":"userA","age":10};
+    </script>
+
+    <!-- 자바스크립트 인라인 사용 후 -->
+    <script th:inline="javascript">
+        var username = [[${user.username}]];//문자를 알아서 문자로 바꿔줌
+        var age = [[${user.age}]];
+
+        //자바스크립트 내추럴 템플릿
+        var username2 = /*[[${user.username}]]*/ "test username";//test username을 user로 치환해줌
+
+        //객체
+        var user = [[${user}]];//객체를 json 으로 자동 변경해줌
+    </script>
+
+    <!-- 자바스크립트 인라인 each -->
+    <script th:inline="javascript">
+
+        [# th:each="user, stat : ${users}"]
+            var user[[${stat.count}]] = [[${user}]];
+        [/]
+        //var user1 = {"username":"userA","age":10};
+        //var user2 = {"username":"userB","age":20};
+        //var user3 = {"username":"userC","age":30};
+    </script>
+</body>
+</html>
