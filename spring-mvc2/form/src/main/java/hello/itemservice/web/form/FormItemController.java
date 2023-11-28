@@ -8,8 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -18,6 +19,17 @@ import java.util.List;
 public class FormItemController {
 
     private final ItemRepository itemRepository;
+
+    @ModelAttribute("regions")//이 컨트롤러 에서 어떤 요청을 하여 이값이 모델에 담김
+    public Map<String, String> regions() {//만약 더 성능을 고려한다면 static 으로 만들어두고 쓰면됨, 근데 큰 문제없음
+
+        Map<String, String> regions = new LinkedHashMap<>();//순서대로 넣기 위한
+                            regions.put("SEOUL", "서울");
+                            regions.put("BUSAN", "부산");
+                            regions.put("JEJU", "제주");
+        return regions;
+        //model.addAttribute("regions", regions);
+    }
 
     @GetMapping
     public String items(Model model) {
@@ -43,6 +55,7 @@ public class FormItemController {
     public String addItem(@ModelAttribute Item item, RedirectAttributes redirectAttributes) {
 
         log.info("item.open={}", item.getOpen());
+        log.info("item.regions={}", item.getRegions());
 
         Item savedItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
