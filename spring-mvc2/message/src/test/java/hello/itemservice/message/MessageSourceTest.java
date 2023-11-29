@@ -37,6 +37,7 @@ public class MessageSourceTest {
     void argumentMessage() {
         String message = ms.getMessage("hello.name", new Object[]{"Spring"}, null);//배열로 넣어줘야함
         assertThat(message).isEqualTo("안녕 Spring");
+        //<p th:text="#{hello.name(${item.itemName})}"></p>
     }
 
     @Test
