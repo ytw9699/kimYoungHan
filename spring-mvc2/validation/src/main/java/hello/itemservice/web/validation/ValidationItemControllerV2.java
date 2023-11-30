@@ -173,10 +173,13 @@ public class ValidationItemControllerV2 {
 
         //ValidationUtils.rejectIfEmptyOrWhitespace(bindingResult,"itemName", "required");//위 로직과 같음
 
-        if (item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000) {
+        FieldError priceError = bindingResult.getFieldError("price");
+
+        if ( priceError == null && (item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000)) {
             //bindingResult.addError(new FieldError("item", "price", item.getPrice(), false, new String[]{"range.item.price"}, new Object[]{1000, 1000000}, null));
             bindingResult.rejectValue("price", "range", new Object[]{1000, 10000000}, null);
         }
+
         if (item.getQuantity() == null || item.getQuantity() >= 9999) {
             bindingResult.rejectValue("quantity", "max", new Object[]{9999}, null);
         }
