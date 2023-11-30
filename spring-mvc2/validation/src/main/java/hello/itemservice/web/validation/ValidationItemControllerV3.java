@@ -43,6 +43,14 @@ public class ValidationItemControllerV3 {
     @PostMapping("/add")
     public String addItem(@Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 
+        //특정 필드가 아닌 복합 룰 검증
+        if (item.getPrice() != null && item.getQuantity() != null) {
+            int resultPrice = item.getPrice() * item.getQuantity();
+            if (resultPrice < 10000) {
+                bindingResult.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
+            }
+        }
+
         //검증에 실패하면 다시 입력 폼으로
         if (bindingResult.hasErrors()) {
             log.info("errors={} ", bindingResult);
@@ -68,6 +76,5 @@ public class ValidationItemControllerV3 {
         itemRepository.update(itemId, item);
         return "redirect:/validation/v3/items/{itemId}";
     }
-
 }
 
