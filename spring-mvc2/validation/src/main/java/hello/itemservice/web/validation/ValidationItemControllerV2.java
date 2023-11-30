@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
@@ -167,7 +168,11 @@ public class ValidationItemControllerV2 {
         if (!StringUtils.hasText(item.getItemName())) {
             //bindingResult.addError(new FieldError("item", "itemName", item.getItemName(), false, new String[]{"required.item.itemName"}, null, null));
             bindingResult.rejectValue("itemName", "required");
+            //rejectValue호출시 MessageCodesResolver사용해서 검증 오류 코드로 메시지 코드들을 생성
         }
+
+        //ValidationUtils.rejectIfEmptyOrWhitespace(bindingResult,"itemName", "required");//위 로직과 같음
+
         if (item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000) {
             //bindingResult.addError(new FieldError("item", "price", item.getPrice(), false, new String[]{"range.item.price"}, new Object[]{1000, 1000000}, null));
             bindingResult.rejectValue("price", "range", new Object[]{1000, 10000000}, null);
