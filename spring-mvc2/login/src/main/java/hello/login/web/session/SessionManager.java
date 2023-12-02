@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 세션 관리
  */
 @Component
-public class SessionManager {
+public class SessionManager {//서블릿이 제공하는 HttpSession 과 거의 비슷하게 동작
 
     public static final String SESSION_COOKIE_NAME = "mySessionId";
     private Map<String, Object> sessionStore = new ConcurrentHashMap<>();//동시성 이슈때문에 ConcurrentHashMap
