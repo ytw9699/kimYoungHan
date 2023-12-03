@@ -30,13 +30,13 @@ public class LogInterceptor implements HandlerInterceptor {
         return true;//false 가 아닌 true 주면 핸들러 handler가 그대로 호출됨
     }
 
-    @Override//예외가 발생하면 postHandle안됨
+    @Override//예외가 발생하면 postHandle안됨. postHandle은 핸들러 어댑터가 modelAndView를 디스패처 서블릿으로 반환해준후 호출됨
     public void postHandle(HttpServletRequest request, HttpServletResponse response,
                                                        Object handler, ModelAndView modelAndView) throws Exception {
-        log.info("postHandle [{}]", modelAndView);//modelAndView 반환해줌
+        log.info("postHandle [{}]", modelAndView);
     }
 
-    @Override//완전히 끝날때 호출. 예외가 발생해도 호출됨
+    @Override//완전히 끝날때 호출. 예외가 발생해도 호출됨. 뷰가 렌더링 된다음에 afterCompletion호출
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
                                                             Object handler, Exception ex) throws Exception {
         String requestURI = request.getRequestURI();
