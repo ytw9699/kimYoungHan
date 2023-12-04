@@ -51,6 +51,7 @@ public class ErrorPageController {
 
         Integer statusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         return new ResponseEntity<>(result, HttpStatus.valueOf(statusCode));
+        //ResponseEntity는 http 메시지 바디에 json 데이터 반환
     }
 
     private void printErrorInfo(HttpServletRequest request) {

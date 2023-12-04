@@ -6,7 +6,7 @@ import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class WebServerCustomizer implements WebServerFactoryCustomizer<ConfigurableWebServerFactory> {
     //서블릿 컨테이너가 제공해준걸 사용하자. web.xml대신 사용하는것. 웹서버(톰캣)를 커스터마이징하자
     @Override
