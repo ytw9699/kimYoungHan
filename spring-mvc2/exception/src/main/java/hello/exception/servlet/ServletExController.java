@@ -13,7 +13,7 @@ public class ServletExController {
     @GetMapping("/error-ex")
     public void errorEx() {//Exception의 경우 와스(톰캣)까지 전달되면 서버내부에서 처리할수 없는 오류로 생각하고 http상태코드 500반환
         throw new RuntimeException("예외 발생!");
-    }
+    }//was까지 전파
 
     @GetMapping("/error-404")// response.sendError는 상태코드 지정가능
     public void error404(HttpServletResponse response) throws IOException {
