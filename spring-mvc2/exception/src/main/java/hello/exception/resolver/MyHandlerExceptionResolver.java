@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Slf4j//Exception을 해결한다
+@Slf4j//Exception을 해결한다. 하지만 여기는 와스에서 다시 response.sendError 때문에 예외 프로세스를 탄다
 public class MyHandlerExceptionResolver implements HandlerExceptionResolver {
 
     @Override
