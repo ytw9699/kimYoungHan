@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <ul>
+        <li>${number}: <span th:text="${number}" ></span></li>
+                                    <!--컨버터를 실행하지 않아도 타임리프가 숫자를 문자로 자동 변환-->
+        <li>${{number}}: <span th:text="${{number}}" ></span></li>
+                                    <!--컨버터 적용-->
+        <li>${ipPort}: <span th:text="${ipPort}" ></span></li>
+                                    <!--괄호 하나는 컨버터 적용안함. 객체를 출력하면 toString-->
+        <li>${{ipPort}}: <span th:text="${{ipPort}}" ></span></li>
+                                    <!--괄호 2개는 컨버전 서비스 사용하여 컨버터 적용후 결과 출력-->
+    </ul>
+</body>
+</html>
