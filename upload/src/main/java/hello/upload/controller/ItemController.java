@@ -60,9 +60,10 @@ public class ItemController {
     }
 
     @ResponseBody
-    @GetMapping("/images/{filename}")//보안에 취약한 로직이다 .신경쓰려면 체크 로직추가해야함
+    @GetMapping("/images/{filename}")//보안에 취약한 로직이다 .신경쓰려면 체크 로직추가해야함 > 이미지에 접근할수있는 권한을 나중에 줘볼수있다.
     public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
         return new UrlResource("file:" + fileStore.getFullPath(filename));//여러가지 방법있지만 일단 간단한 것
+        //실제 파일에 접근해서 리소스를 가져오고 바이너이 데이터를 웹브라우저로 전송
         //실제 파일을 스트림으로 반환 InputStreamSource
     }
 
@@ -79,7 +80,7 @@ public class ItemController {
         log.info("uploadFileName={}", uploadFileName);
 
         String encodedUploadFileName = UriUtils.encode(uploadFileName, StandardCharsets.UTF_8);//한글 설정
-        String contentDisposition = "attachment; filename=\"" + encodedUploadFileName + "\"";
+        String contentDisposition = "attachment; filename=\"" + encodedUploadFileName + "\"";//파일명 변경
         //이렇게 헤더에 넣어줘야 실제 다운로드가 된다. 규약임. 브라우저가 attachment 인식하고 다운로드를 한다
 
         return ResponseEntity.ok()
