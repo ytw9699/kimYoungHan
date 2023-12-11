@@ -20,9 +20,14 @@ public class JpaMain {
         try{
             Member member = new Member();
                    member.setId(1L);
-                   member.setName("Hello1");
+                   member.setName("Hello1");//여기까진 아직 비영속 상태
 
-            em.persist(member);
+            System.out.println("===Before===");
+            em.persist(member);//엔티티를 영속성 컨텍스트에 저장한다는것이다. 영속상태가 됨
+            //디비에 저장한다는 뜻보다는 영속성컨텍스트를 통해서 엔티티를 영속화 하는것
+            //em.detach(member);//영속성 컨텍스트에서 삭제함. 준영속 상태
+            //em.remove(member);//실제 디비에서 영구저장한것을 삭제 요청하는것
+            System.out.println("===After===");
 
             Member findMember = em.find(Member.class, 1L);//단순한 조회
             System.out.println("findMember.getId() = " + findMember.getId());
@@ -39,7 +44,7 @@ public class JpaMain {
             }
 
             findMember.setName("hello2");//이렇게만 해줘도 수정됨. persist안해도됨
-            tx.commit();//jpa가 엔티티를 관리하면서 변경이되었는지 커밋할때 체크함. 변경되면 업데이트하고 커밋함
+            tx.commit();//jpa가 엔티티를 관리하면서 변경이되었는지 커밋할때 체크함. 변경되면 업데이트하고 커밋함. 이때 쿼리가 날라감
 
         }catch (Exception e){
             tx.rollback();
