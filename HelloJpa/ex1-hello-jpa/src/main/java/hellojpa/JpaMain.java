@@ -13,6 +13,7 @@ public class JpaMain {
         EntityManager em = emf.createEntityManager();//쉽게 해석하면 데이터베이스 커넥션 하나 받았다고 생각
         //실제 디비에 저장하는 트랜잭션 단위처럼 고객의 행위(디비커넥션 얻고 쿼리날리고 종료)를 할때마다 EntityManager를 만들어 줘야함.
         //EntityManager가 내부적으로 디비 커넥션 물고 동작, 쓰레드간에 공유하면 안되고 사용하고 버려야함
+        //고객의 요청이 들어와서 만들고 요청이 나가면 버림
 
         //jpa 모든 데이터 변경은 트랜잭션 안에서 실행. 조회는 예외
         EntityTransaction tx = em.getTransaction();//트랜잭션 얻음
@@ -23,13 +24,13 @@ public class JpaMain {
                    member.setName("Hello1");//여기까진 아직 비영속 상태
 
             System.out.println("===Before===");
-            em.persist(member);//엔티티를 영속성 컨텍스트에 저장한다는것이다. 영속상태가 됨
+            em.persist(member);//엔티티를 영속성 컨텍스트에 저장한다는것이다. 영속상태가 됨.
             //디비에 저장한다는 뜻보다는 영속성컨텍스트를 통해서 엔티티를 영속화 하는것
             //em.detach(member);//영속성 컨텍스트에서 삭제함. 준영속 상태
             //em.remove(member);//실제 디비에서 영구저장한것을 삭제 요청하는것
             System.out.println("===After===");
 
-            Member findMember = em.find(Member.class, 1L);//단순한 조회
+            Member findMember = em.find(Member.class, 1L);//단순한 조회. 이때 1차캐시에서 조회함
             System.out.println("findMember.getId() = " + findMember.getId());
             System.out.println("findMember.getName() = " + findMember.getName());
 

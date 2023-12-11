@@ -27,7 +27,7 @@ public class Member {
     @Transient
     private int temp;//메모리에만 있음 캐싱필요할때
 
-    public Member(){} //jpa는 리플렉션을 쓰기에 기본생성자 있어야함
+    public Member(){} //jpa는 내부적으로 리플렉션 같은것을 쓰기에 동적으로 객체생성하려면 기본생성자 있어야함
 
     public Member(Long id, String name){//생성자
         this.id = id;
