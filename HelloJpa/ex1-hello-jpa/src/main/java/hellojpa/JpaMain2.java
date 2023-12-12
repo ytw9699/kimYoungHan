@@ -21,11 +21,12 @@ public class JpaMain2 {
                 Member member2 = new Member(160L,"A");
 
                 em.persist(member1);
+                em.flush();//영속성 컨텍스트의 변경 내용을 디비에 동기화. 디비에 쿼리까지만 날림. 하지만 트랜잭션이 커밋되는것은 아님
                 em.persist(member2);
 
                 System.out.println("================");
 
-                tx.commit();
+                tx.commit();//커밋시 자동으로 flush호출
 
         }catch (Exception e){
             tx.rollback();
