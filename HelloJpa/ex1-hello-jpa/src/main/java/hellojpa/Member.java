@@ -8,6 +8,11 @@ import java.util.Date;
 @Entity//jpa가 로딩될때 jpa를 사용하는 애로인식하고 관리한다.
 @Table(name = "Member")//맵핑
 public class Member {
+
+   /* @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;*/
+
     @Id//pk가 뭔지 알려준다
     private Long id;
     @Column(name="name", unique = true, length = 20)//맵핑
