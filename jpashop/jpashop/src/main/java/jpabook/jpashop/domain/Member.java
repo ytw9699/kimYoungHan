@@ -8,7 +8,7 @@ import javax.persistence.Id;
 @Entity
 public class Member {
     @Id
-    @GeneratedValue
+    @GeneratedValue//기본 오토
     @Column(name = "MEMBER_ID")
     private Long id;
     private String name;

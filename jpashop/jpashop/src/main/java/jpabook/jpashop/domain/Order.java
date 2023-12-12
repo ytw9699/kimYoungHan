@@ -12,7 +12,7 @@ public class Order {
     private Long id;
 
     @Column(name = "MEMBER_ID")
-    private Long memberId;
+    private Long memberId;//객체지향적인 설계가 아님. 관계형 디비에 맞춘 설계
     private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)
