@@ -24,11 +24,11 @@ public class JpaMain3 {
 
             Member3 member3 = new Member3();
                     member3.setUsername("member3");
-                    member3.setTeam(team3);//이렇게 해줘야 TEAM_ID 외래키가 들어감
+                    member3.changeTeam(team3);//이렇게 해줘야 TEAM_ID 외래키가 들어감
                     
             em.persist(member3);
 
-            //team3.getMembers().add(member3);//양쪽으로 셋팅
+            //team3.getMembers().add(member3);//양쪽으로 셋팅 이렇게 해야 객체지향적인것이고 테스트 케이스 작성할때도 jpa 없이 가능
             //위 로직 대신 member3 엔티티 들어가서 setTeam할때 같이 셋팅
 
             //em.flush();

@@ -36,8 +36,9 @@ public class Member3 {
         return team3;
     }
 
-    public void setTeam(Team3 team3) {
+    public void changeTeam(Team3 team3) {
         this.team3 = team3;
         team3.getMembers().add(this);//this는 나자신의 인스턴스를 넣어줌
+        //사실 로직이 추후 더 복잡해지면 추가만이 아니라 기존에 것을 먼저 삭제하고 넣어줘야함
     }
 }
