@@ -16,7 +16,7 @@ public class Member2 {
     private String zipcode;
 
     @OneToMany(mappedBy = "member")
-    private List<Order2> oders = new ArrayList<>();//굳이 이렇게 양방향 매핑할필요없지만 해보자
+    private List<Order2> orders = new ArrayList<>();//굳이 이렇게 양방향 매핑할필요없지만 해보자
 
     public Long getId() {
         return id;
@@ -58,11 +58,11 @@ public class Member2 {
         this.zipcode = zipcode;
     }
 
-    public List<Order2> getOders() {
-        return oders;
+    public List<Order2> getOrders() {
+        return orders;
     }
 
-    public void setOders(List<Order2> oders) {
-        this.oders = oders;
+    public void setOrders(List<Order2> orders) {
+        this.orders = orders;
     }
 }
