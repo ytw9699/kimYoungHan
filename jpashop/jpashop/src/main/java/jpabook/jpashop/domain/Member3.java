@@ -1,12 +1,11 @@
 package jpabook.jpashop.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-public class Member {
+public class Member3 {
     @Id
     @GeneratedValue//기본 오토
     @Column(name = "MEMBER_ID")
@@ -15,6 +14,9 @@ public class Member {
     private String city;
     private String street;
     private String zipcode;
+
+    @OneToMany(mappedBy = "member")
+    private List<Order3> order = new ArrayList<>();//굳이 이렇게 양방향 매핑할필요없지만 해보자
 
     public Long getId() {
         return id;
@@ -54,5 +56,13 @@ public class Member {
 
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
+    }
+
+    public List<Order3> getOrder() {
+        return order;
+    }
+
+    public void setOrder(List<Order3> order) {
+        this.order = order;
     }
 }

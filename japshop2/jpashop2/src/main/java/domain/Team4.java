@@ -5,24 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Team {
+public class Team4 {
     @Id
     @GeneratedValue
     @Column(name = "TEAM_ID")
     private Long id;
     private String name;
     
-    //팀은 1 멤버는 다  > 1:다
-    @OneToMany(mappedBy = "team")//멤버테이블의 변수명. mappedBy의 정체는
-    private List<Member2> members = new ArrayList<>();//add 할때 null포인트 안뜨게 초기화
-
-    public List<Member2> getMembers() {
-        return members;
-    }
-
-    public void setMembers(List<Member2> members) {
-        this.members = members;
-    }
+    @OneToMany
+    @JoinColumn(name = "TEAM_ID")//JoinColumn사용안하면 조인테이블 방식 디폴트 사용하기에 JoinColumn사용하는게 좋음
+    private List<Member4> members = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -38,5 +30,13 @@ public class Team {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Member4> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<Member4> members) {
+        this.members = members;
     }
 }

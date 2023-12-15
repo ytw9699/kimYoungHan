@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Team {
+public class Team3 {
     @Id
     @GeneratedValue
     @Column(name = "TEAM_ID")
@@ -13,14 +13,14 @@ public class Team {
     private String name;
     
     //팀은 1 멤버는 다  > 1:다
-    @OneToMany(mappedBy = "team")//멤버테이블의 변수명. mappedBy의 정체는
-    private List<Member2> members = new ArrayList<>();//add 할때 null포인트 안뜨게 초기화
+    @OneToMany(mappedBy = "team3")//멤버테이블의 변수명. mappedBy의 정체는
+    private List<Member3> members = new ArrayList<>();//add 할때 null포인트 안뜨게 초기화
 
-    public List<Member2> getMembers() {
+    public List<Member3> getMembers() {
         return members;
     }
 
-    public void setMembers(List<Member2> members) {
+    public void setMembers(List<Member3> members) {
         this.members = members;
     }
 

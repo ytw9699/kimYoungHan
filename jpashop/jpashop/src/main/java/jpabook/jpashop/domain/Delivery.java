@@ -1,20 +1,18 @@
 package jpabook.jpashop.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-public class Member {
+public class Delivery {
     @Id
-    @GeneratedValue//기본 오토
-    @Column(name = "MEMBER_ID")
+    @GeneratedValue
     private Long id;
-    private String name;
     private String city;
     private String street;
     private String zipcode;
+    private DeliveryStatus status;
+    @OneToOne(mappedBy = "delivery")
+    private Order3 order;//양방향
 
     public Long getId() {
         return id;
@@ -22,14 +20,6 @@ public class Member {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getCity() {
@@ -54,5 +44,21 @@ public class Member {
 
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
+    }
+
+    public DeliveryStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(DeliveryStatus status) {
+        this.status = status;
+    }
+
+    public Order3 getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order3 order) {
+        this.order = order;
     }
 }
