@@ -19,7 +19,7 @@ public class JpaMain6 {
         try{
             Member6 member = new Member6();
                     member.setUserName("Member6");
-                    member.setHomeAddress(new Address("city","street", "10"));
+                    member.setHomeAddress(new Address("city","street", "10000"));
                     member.setWorkPeriod(new Period());
 
             em.persist(member);
