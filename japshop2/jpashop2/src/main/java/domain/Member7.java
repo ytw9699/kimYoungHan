@@ -3,6 +3,8 @@ package domain;
 import lombok.Data;
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Data
 @Entity
 public class Member7 {
@@ -14,7 +16,7 @@ public class Member7 {
     @Column(name = "USERNAME")
     private String username;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "TEAM_ID")
     private Team7 team7;
 }

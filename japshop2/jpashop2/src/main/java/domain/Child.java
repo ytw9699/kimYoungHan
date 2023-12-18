@@ -1,8 +1,8 @@
 package domain;
 
 import lombok.Data;
-
 import javax.persistence.*;
+import static javax.persistence.FetchType.LAZY;
 
 @Data
 @Entity
@@ -12,7 +12,7 @@ public class Child {
     private Long id;
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name="parent_id")
     private Parent parent;
 }

@@ -1,6 +1,7 @@
 package domain;
 
 import javax.persistence.*;
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
 public class Member5 {
@@ -11,7 +12,7 @@ public class Member5 {
     @Column(name = "USERNAME")
     private String username;
 
-    @OneToOne
+    @OneToOne(fetch = LAZY)
     @JoinColumn(name = "LOCKER_ID")
     private Locker locker;
 

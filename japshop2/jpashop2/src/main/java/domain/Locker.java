@@ -1,6 +1,7 @@
 package domain;
 
 import javax.persistence.*;
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
 public class Locker {
@@ -10,7 +11,7 @@ public class Locker {
 
     private String name;
 
-    @OneToOne(mappedBy = "locker")
+    @OneToOne(mappedBy = "locker", fetch = LAZY)
     private Member5 member;
 
     public Long getId() {
