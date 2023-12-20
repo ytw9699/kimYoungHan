@@ -1,6 +1,8 @@
 package jpabook.jpashop.domain;
 
 import jpabook.jpashop.domain.jpql.Member7;
+import jpabook.jpashop.domain.jpql.MemberDTO;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -42,6 +44,12 @@ public class JpaMain7 {
                                     .setParameter("username","member7")
                                     .getSingleResult();
             System.out.println("singleResult1 = " + singleResult1);
+
+            List<MemberDTO>  result = em.createQuery("select new jpabook.jpashop.domain.jpql.MemberDTO(m.username, m.age) from Member7 as m", MemberDTO.class)
+                    .getResultList();
+
+            MemberDTO memberDTO = result.get(0);
+            System.out.println("memberDTO = " + memberDTO);
 
             tx.commit();
 
