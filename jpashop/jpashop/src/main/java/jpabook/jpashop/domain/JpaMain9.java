@@ -25,8 +25,7 @@ public class JpaMain9 {
 
             em.persist(team7);
 
-
-             member = new Member7();
+            Member7 member = new Member7();
                     member.setUsername("member8");
                     member.setAge(10);
 
