@@ -17,4 +17,13 @@ public class Member7 {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "TEAM_ID")
     private Team7 team7;
+
+    @Override
+    public String toString() {
+        return "Member7{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }
