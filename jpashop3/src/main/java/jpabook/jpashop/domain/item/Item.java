@@ -11,7 +11,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
 @Getter @Setter
-public abstract class Item {//추상클래스로 한다 구현체를 만들것이기때문
+public abstract class Item {//추상클래스로 한다 구현체를 가지고할것이기때문
 
     @Id
     @GeneratedValue

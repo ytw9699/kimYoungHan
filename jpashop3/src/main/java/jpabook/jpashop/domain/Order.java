@@ -17,7 +17,7 @@ public class Order {
     @Column(name = "order_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")//맵핑 외래키
     private Member member;//연관관계주인. 이곳의 멤버를 바꾸면 다른멤버의 아이디로 외래키가 설정됨
 
@@ -30,5 +30,22 @@ public class Order {
 
     private LocalDateTime orderDate; //주문시간
 
+    @Enumerated(EnumType.STRING)
     private OrderStatus status; //주문상태 [ORDER, CANCEL]
+
+    //==연관관계 메서드는 핵심적으로 컨트롤 하는쪽에서 들고있는게 좋다==//
+    public void setMember(Member member) {
+        this.member = member;
+        member.getOrders().add(this);//양방향이기때문
+    }
+
+    public void addOrderItem(OrderItem orderItem) {
+        orderItems.add(orderItem);
+        orderItem.setOrder(this);//양방향이기때문
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+        delivery.setOrder(this);//양방향이기때문
+    }
 }
