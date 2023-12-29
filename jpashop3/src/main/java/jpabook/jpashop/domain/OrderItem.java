@@ -1,14 +1,22 @@
 package jpabook.jpashop.domain;
 
 import jpabook.jpashop.domain.item.Item;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
 import static javax.persistence.FetchType.LAZY;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)//파라미터가 없는 디폴트 생성자를 PROTECTED로 생성
+//이렇게 되면 직접 생성을 못하고, 다른 스타일로 생성메서드를 이용해야 하는구나 알게됨, 이렇게 제약하는 스타일이 좋은 유지보수와 설계를 가져옴
 @Entity
 @Getter @Setter
 public class OrderItem {
+
+    /*protected OrderItem(){//파라미터가 없는 디폴트 생성자를 PROTECTED로 생성
+
+    }*/
 
     @Id @GeneratedValue
     @Column(name = "order_item_id")

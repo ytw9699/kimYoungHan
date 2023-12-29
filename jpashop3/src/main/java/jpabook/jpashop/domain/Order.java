@@ -1,6 +1,8 @@
 package jpabook.jpashop.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -8,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import static javax.persistence.FetchType.LAZY;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "orders")
 @Getter @Setter
@@ -21,7 +24,7 @@ public class Order {
     @JoinColumn(name = "member_id")//맵핑 외래키
     private Member member;//연관관계주인. 이곳의 멤버를 바꾸면 다른멤버의 아이디로 외래키가 설정됨
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)//order 를 persist 하면 OrderItem도 해줌
     private List<OrderItem> orderItems = new ArrayList<>();
 
     @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
