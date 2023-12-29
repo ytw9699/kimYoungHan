@@ -48,4 +48,60 @@ public class Order {
         this.delivery = delivery;
         delivery.setOrder(this);//양방향이기때문
     }
+
+    /**
+     * 주문 생성
+     */
+    //==비즈니스 로직 응집해둠==//
+    //==생성 메서드, 앞으로 생성시 무엇이 변경되면 이 메소드만 바꾸면 됨 ==//
+    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
+        //실무에서는 훨씬복잡함. OrderItem도 그냥 넘어노느게 아니라 dto가 넘어올수도 있음.그리고 OrderItem도 이안에서 생성할수도 있음 
+        
+        Order order = new Order();
+              order.setMember(member);
+              order.setDelivery(delivery);
+
+        for (OrderItem orderItem : orderItems) {
+            order.addOrderItem(orderItem);
+        }
+        order.setStatus(OrderStatus.ORDER);
+        order.setOrderDate(LocalDateTime.now());
+
+        return order;
+    }
+
+    //==비즈니스 로직==//
+    /**
+     * 주문 취소
+     */
+    public void cancel() {
+        if (delivery.getStatus() == DeliveryStatus.COMP) {//이 체크로직도 엔티티 안에있다!
+            throw new IllegalStateException("이미 배송완료된 상품은 취소가 불가능합니다.");
+        }
+        this.setStatus(OrderStatus.CANCEL);//오더상태 변경
+
+        for (OrderItem orderItem : orderItems) {//재고원복
+            orderItem.cancel();
+        }
+    }
+
+    //==조회 로직==//
+    /**
+     * 전체 주문 가격 조회
+     */
+    public int getTotalPrice() {
+        int totalPrice = 0;
+
+        for (OrderItem orderItem : orderItems) {
+            totalPrice += orderItem.getTotalPrice();
+        }
+        return totalPrice;
+    }
+
+    public int getTotalPrice2() {//위 getTotalPrice() 로직과 같음
+        return orderItems.stream()
+                          .mapToInt(OrderItem::getTotalPrice)
+                          .sum();
+    }
+
 }
