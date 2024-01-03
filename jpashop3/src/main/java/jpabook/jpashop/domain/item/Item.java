@@ -40,7 +40,7 @@ public abstract class Item {//추상클래스로 한다 구현체를 가지고�
     /**
      * stock 감소
      */
-    public void removeStock(int quantity) {
+    public void removeStock(int quantity) {//이 비지니스 메소드에 대한 단위테스트도 사실 필요하다
         int restStock = this.stockQuantity - quantity;
         if (restStock < 0) {
             throw new NotEnoughStockException("need more stock");
