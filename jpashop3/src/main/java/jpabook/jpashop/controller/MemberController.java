@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -39,5 +40,12 @@ public class MemberController {
         memberService.join(member);
 
         return "redirect:/";
+    }
+
+    @GetMapping("/members")
+    public String list(Model model) {
+        List<Member> members = memberService.findMembers();//Member엔티티 보다 dto(데이터 이동 객체)를 만들어서 변환하자 나중에
+        model.addAttribute("members", members);
+        return "members/memberList";
     }
 }
