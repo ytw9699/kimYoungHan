@@ -30,7 +30,7 @@ public class OrderService {
 
         //배송정보 생성
         Delivery delivery = new Delivery();
-                delivery.setAddress(member.getAddress());//간단히 하기 위해 회원의 정보를 집어넣는다
+                 delivery.setAddress(member.getAddress());//간단히 하기 위해 회원의 정보를 집어넣는다
                 //delivery.setStatus(DeliveryStatus.READY);
 
         //주문상품 생성
