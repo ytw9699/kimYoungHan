@@ -2,6 +2,7 @@ package jpabook.jpashop.api;
 
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.service.MemberService;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -32,10 +33,22 @@ public class MemberApiController {
     public CreateMemberResponse saveMemberV2(@RequestBody @Valid CreateMemberRequest request) {
 
         Member member = new Member();
-        member.setUsername(request.getName());
+        member.setUsername(request.getUsername());
 
         Long id = memberService.join(member);
         return new CreateMemberResponse(id);
+    }
+
+    /**
+     * 수정 API
+     */
+    @PutMapping("/api/v2/members/{id}")
+    public UpdateMemberResponse updateMemberV2(@PathVariable("id") Long id,
+                                               @RequestBody @Valid UpdateMemberRequest request) {
+        memberService.update(id, request.getUsername());
+        //여기서 멤버 반환하지 않고 끝냄, 수정은 수정이지 조회가 아니라고 보기때문에 구분. 그러면 유지보수 증가
+        Member findMember = memberService.findOne(id);
+        return new UpdateMemberResponse(findMember.getId(), findMember.getUsername());
     }
 
     @Data
@@ -49,6 +62,18 @@ public class MemberApiController {
 
     @Data
     static class CreateMemberRequest {
-        private String name;
+        private String username;
+    }
+
+    @Data
+    static class UpdateMemberRequest {
+        private String username;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class UpdateMemberResponse {
+        private Long id;
+        private String username;
     }
 }

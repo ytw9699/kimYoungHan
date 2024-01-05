@@ -40,4 +40,13 @@ public class MemberService {
         return memberRepository.findOne(memberId);
     }
 
+    /**
+     * 회원 수정
+     */
+    @Transactional
+    public void update(Long id, String name) {
+        Member member = memberRepository.findOne(id);//영속성 컨텍스트에서 가져옴
+        member.setUsername(name);
+        //엔티티가 바뀌면 트랙잭션끝나고 커밋되는 시점에 jpa 변경감지 실행후 업데이트 쿼리 날림
+    }
 }
