@@ -64,8 +64,8 @@ public class ItemController {
         return "items/updateItemForm";
     }
 
-    @PostMapping("items/{itemId}/edit")//아이템 id조작할수있기때문에, 서버단에서 이 유저가 작성한건지 확인해야함
-    public String updateItem(@PathVariable Long itemId, @ModelAttribute("form") BookForm form) {
+    @PostMapping("items2/{itemId}/edit")//아이템 id조작할수있기때문에, 서버단에서 이 유저가 작성한건지 확인해야함
+    public String updateItem2(@PathVariable Long itemId, @ModelAttribute("form") BookForm form) {
 
         Book book = new Book();
              book.setId(form.getId());
@@ -76,6 +76,15 @@ public class ItemController {
              book.setIsbn(form.getIsbn());
 
         itemService.saveItem(book);
+
+        return "redirect:/items";
+    }
+
+    @PostMapping("items/{itemId}/edit")
+    public String updateItem(@PathVariable Long itemId, @ModelAttribute("form") BookForm form) {
+
+        itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity());
+        //엔티티를 파라미터로 안씀 이게 좋은방식
 
         return "redirect:/items";
     }
