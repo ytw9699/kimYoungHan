@@ -23,6 +23,7 @@ public class Order {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")//맵핑 외래키
     private Member member;//연관관계주인. 이곳의 멤버를 바꾸면 다른멤버의 아이디로 외래키가 설정됨
+    //lazy 여도 가짜 프록시 멤버 객체를 만들어둠
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)//order 를 persist 하면 OrderItem도 해줌
     private List<OrderItem> orderItems = new ArrayList<>();
