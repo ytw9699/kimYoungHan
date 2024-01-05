@@ -1,6 +1,7 @@
 package domain;
 
 import javax.persistence.*;
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
 public class Member2 {
@@ -13,7 +14,7 @@ public class Member2 {
     /*@Column(name = "TEAM_ID")
     private Long teamId;*/
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "TEAM_ID")
     private Team team;//멤버는 n 이고 팀은 1이다.
 

@@ -16,11 +16,12 @@ public class Order3 {
     @JoinColumn(name="MEMBER_ID")
     private Member3 member;
 
-    @OneToOne
+    //오더 생성저장할때 딜리버리도 같이 저장
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)//주문생성할때 배송정보도 같이생성해서 라이프사이클 맞춤
     @JoinColumn(name="DELIVERY_ID")
     private Delivery delivery;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem3> orderItems = new ArrayList<>();
 
     private LocalDateTime orderDate;
