@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -51,6 +53,26 @@ public class MemberApiController {
         return new UpdateMemberResponse(findMember.getId(), findMember.getUsername());
     }
 
+    //조회 V1: 안 좋은 버전, 기본적으로 모든 엔티티 값이 노출되어 @JsonIgnore쓰면 -> 이건 정말 최악
+    @GetMapping("/api/v1/members")
+    public List<Member> membersV1() {
+        return memberService.findMembers();
+    }
+    //그리고 이렇게 리스트 반환하는건 나중에 확장을 못해 좋지않음
+
+    /**
+     * 조회 V2: 응답 값으로 엔티티가 아닌 별도의 DTO를 반환한다.
+     */
+    @GetMapping("/api/v2/members")
+    public Result membersV2() {
+        List<Member> findMembers = memberService.findMembers();
+        //엔티티 -> DTO 변환
+        List<MemberDto> collect = findMembers.stream()
+                                              .map(m -> new MemberDto(m.getUsername()))
+                                              .collect(Collectors.toList());
+        return new Result(collect);
+    }
+
     @Data
     static class CreateMemberResponse {
         private Long id;
@@ -76,4 +98,17 @@ public class MemberApiController {
         private Long id;
         private String username;
     }
+
+    @Data
+    @AllArgsConstructor
+    static class Result<T> {
+        private T data;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class MemberDto {
+        private String name;
+    }
+
 }
