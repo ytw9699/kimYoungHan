@@ -21,7 +21,7 @@ public class OrderService {
     /**
      * 주문
      */
-    @Transactional
+    @Transactional//이렇게 트랙잭션 안에서 엔티티를 불러오는게 값을 변경하더라도 더티체킹 가능
     public Long order(Long memberId, Long itemId, int count) {
 
         //엔티티 조회
