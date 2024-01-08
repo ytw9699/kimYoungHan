@@ -12,6 +12,7 @@ spring:
       hibernate:
         #show_sql: true > 시스템 아웃으로 찍을때의 설정이니까 아래 로그로 DEBUG 모드로 찍자
         format_sql: true
+        default_batch_fetch_size: 1000 #최적화 옵션
 
 logging:
   level:
