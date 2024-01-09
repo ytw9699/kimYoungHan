@@ -22,7 +22,7 @@ class MemberRepositoryTest {
         Member member = new Member("memberA");
         Member savedMember = repository.save(member);
 
-        Member findMember = repository.findById(savedMember.getId()).get();
+        Member findMember = repository.findById(savedMember.getId()).get();//옵셔널 쓰는건데 일단 대충 코딩
 
         assertThat(findMember.getId()).isEqualTo(member.getId());
         assertThat(findMember.getUsername()).isEqualTo(member.getUsername());

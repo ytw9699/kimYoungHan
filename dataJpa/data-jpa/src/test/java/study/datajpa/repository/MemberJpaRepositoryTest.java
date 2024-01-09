@@ -24,7 +24,8 @@ class MemberJpaRepositoryTest {
 
         assertThat(findMember.getId()).isEqualTo(member.getId());
         assertThat(findMember.getUsername()).isEqualTo(member.getUsername());
-        assertThat(findMember).isEqualTo(member);
+        assertThat(findMember).isEqualTo(member);//findMember == member와 같은 상황인데
+        //Transactional이 같기에 같은 인스턴스
     }
 
     @Test
