@@ -12,7 +12,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Repository
-public class OrderRepository {
+public class OrderRepository {//핵심비즈니스를 위한 엔티티를 찾을때
 
     private final EntityManager em;
 
