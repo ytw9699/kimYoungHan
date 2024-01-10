@@ -27,7 +27,7 @@ public class MemberJpaRepository {
 
     public Optional<Member> findById(Long id){
         Member member = em.find(Member.class, id);
-        return Optional.ofNullable(member);
+        return Optional.ofNullable(member);//member가 null일수도 아닐수도 있다.
     }
 
     public Member find(Long id){

@@ -36,7 +36,7 @@ class MemberJpaRepositoryTest {
         repository.save(member2);
 
         //단건 조회 검증
-        Member findMember1 = repository.findById(member1.getId()).get();
+        Member findMember1 = repository.findById(member1.getId()).get();//편의상 옵셔널 일단 안씀
         Member findMember2 = repository.findById(member2.getId()).get();
         assertThat(findMember1).isEqualTo(member1);
         assertThat(findMember2).isEqualTo(member2);
