@@ -36,8 +36,8 @@ class MemberTest {
         em.persist(member4);
 
         //초기화
-        em.flush();
-        em.clear();
+        em.flush();//디비에 입력
+        em.clear();//영속성 컨텍스트 날림
 
         //확인
         List<Member> members =
