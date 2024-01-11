@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import study.datajpa.dto.MemberDto;
 import study.datajpa.entity.Member;
 import study.datajpa.entity.Team;
+import java.util.Arrays;
 import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 
@@ -120,6 +121,19 @@ class MemberRepositoryTest {
         List<MemberDto> dataList = repository.findMemberDto();
         for (MemberDto memberDto : dataList) {
             System.out.println("MembetDto ==> " + memberDto);
+        }
+    }
+
+    @Test
+    public void testFindByNames() {
+        Member m1 = new Member("AAA", 10);
+        Member m2 = new Member("BBB", 20);
+
+        repository.saveAll(Arrays.asList(m1, m2));
+
+        List<Member> members = repository.findByNames(Arrays.asList("AAA", "BBB"));
+        for (Member member : members) {
+            System.out.println("Member ==> " + member);
         }
     }
 
