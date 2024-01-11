@@ -3,6 +3,9 @@ package study.datajpa.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import study.datajpa.dto.MemberDto;
@@ -156,6 +159,40 @@ class MemberRepositoryTest {
         //자바8이상의 경우, 데이터있을수도 없을수도 있으면 Optional쓰는게 맞음
         Optional<Member> result2 = repository.findOptionalMemberByUsername("AAA");
         System.out.println("result2 = " + result2);
+    }
+    
+    @Test
+    public void paging() {
+        // given
+        repository.save(new Member("member1", 10));
+        repository.save(new Member("member2", 10));
+        repository.save(new Member("member3", 10));
+        repository.save(new Member("member4", 10));
+        repository.save(new Member("member5", 10));
+
+        int age = 10;
+        PageRequest pageRequest
+                = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "username"));//페이지는 0부터시작
+        //0페이지에서 3개 가져와
+
+        // when
+        Page<Member> page = repository.findByAge(age, pageRequest);
+        //총 카운트 쿼리 분리 : 구하게되면 조인도 같이하게되서 수동으로 적어줘야함
+        //Slice<Member> page = repository.findByAge(age, pageRequest);
+        //더보기 예제 , limit+1 주어서 추가 count쿼리없이 다음페이지 여부 확인
+        List<Member> content = page.getContent();
+
+        Page<MemberDto> dtoPage = page.map(m -> new MemberDto(m.getId(), m.getUsername(), null));
+        //dto로 변경하는 방법
+
+        // then
+        assertThat(content.size()).isEqualTo(pageRequest.getPageSize());
+        assertThat(page.getTotalElements()).isEqualTo(5);//총 카운트 
+        assertThat(page.getNumber()).isEqualTo(pageRequest.getPageNumber());//현재 페이지
+        assertThat(page.getTotalPages()).isEqualTo(2);//총페이지수
+        assertThat(page.isFirst()).isTrue();//첫페이지냐
+        assertThat(page.isLast()).isFalse();
+        assertThat(page.hasNext()).isTrue();//다음페이지가 있냐
     }
 }
 
