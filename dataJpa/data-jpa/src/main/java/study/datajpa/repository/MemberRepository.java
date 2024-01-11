@@ -8,4 +8,6 @@ import java.util.List;
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
     List<Member> findByUsername(String username);//구현하지 않아도 동작. 쿼리메소드 기능!
+
+    List<Member> findByUsernameAndAgeGreaterThan(String username, int age);
 }
