@@ -10,6 +10,8 @@ import study.datajpa.entity.Member;
 import study.datajpa.entity.Team;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
@@ -137,6 +139,24 @@ class MemberRepositoryTest {
         }
     }
 
+
+    @Test
+    public void returnType() {
+        Member m1 = new Member("AAA", 10);
+        Member m2 = new Member("BBB", 20);
+        repository.save(m1);
+        repository.save(m2);
+
+        List<Member> result = repository.findListByUsername("AAA");//jpa에서 리스트는 데이터없어도 널 반환 안환다
+        System.out.println("findListByUsername ==> " + result.size());
+
+        Member findMember = repository.findMemberByUsername("AAA");//단건은 데이터없으면 null 반환됨
+        System.out.println("findMember = " + findMember);
+
+        //자바8이상의 경우, 데이터있을수도 없을수도 있으면 Optional쓰는게 맞음
+        Optional<Member> result2 = repository.findOptionalMemberByUsername("AAA");
+        System.out.println("result2 = " + result2);
+    }
 }
 
 
