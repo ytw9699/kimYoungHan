@@ -11,10 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 import study.datajpa.dto.MemberDto;
 import study.datajpa.entity.Member;
 import study.datajpa.entity.Team;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
@@ -25,6 +26,8 @@ class MemberRepositoryTest {
     MemberRepository repository;//스프링이 구현체를 인젝션 해줌
     @Autowired
     private TeamRepository teamRepository;
+    @PersistenceContext
+    EntityManager em;
 
     @Test
     public void testMember(){
@@ -160,7 +163,7 @@ class MemberRepositoryTest {
         Optional<Member> result2 = repository.findOptionalMemberByUsername("AAA");
         System.out.println("result2 = " + result2);
     }
-    
+
     @Test
     public void paging() {
         // given
@@ -193,6 +196,27 @@ class MemberRepositoryTest {
         assertThat(page.isFirst()).isTrue();//첫페이지냐
         assertThat(page.isLast()).isFalse();
         assertThat(page.hasNext()).isTrue();//다음페이지가 있냐
+    }
+
+    @Test
+    public void bulkAUpdate() {
+        // given
+        repository.save(new Member("member1", 10));
+        repository.save(new Member("member2", 19));
+        repository.save(new Member("member4", 20));
+        repository.save(new Member("member3", 21));
+        repository.save(new Member("member5", 40));
+
+        // when
+        int resultCount = repository.bulkAgePlus(20);//JPQL이 나가기전에 flush를 한다
+        //em.clear();
+
+        List<Member> result =repository.findByUsername("member5");
+        Member member5 = result.get(0);
+        System.out.println("member5 = " + member5);
+
+        // then
+        assertThat(resultCount).isEqualTo(3);
     }
 }
 
