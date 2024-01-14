@@ -24,7 +24,8 @@ class MemberJpaRepositoryTest {
 
         assertThat(findMember.getId()).isEqualTo(member.getId());
         assertThat(findMember.getUsername()).isEqualTo(member.getUsername());
-        assertThat(findMember).isEqualTo(member);
+        assertThat(findMember).isEqualTo(member);//findMember == member와 같은 상황인데
+        //Transactional이 같기에 같은 인스턴스
     }
 
     @Test
@@ -35,7 +36,7 @@ class MemberJpaRepositoryTest {
         repository.save(member2);
 
         //단건 조회 검증
-        Member findMember1 = repository.findById(member1.getId()).get();
+        Member findMember1 = repository.findById(member1.getId()).get();//편의상 옵셔널 일단 안씀
         Member findMember2 = repository.findById(member2.getId()).get();
         assertThat(findMember1).isEqualTo(member1);
         assertThat(findMember2).isEqualTo(member2);
@@ -53,5 +54,60 @@ class MemberJpaRepositoryTest {
         repository.delete(member2);
         long deletedCount = repository.count();
         assertThat(deletedCount).isEqualTo(0);
+    }
+
+    @Test
+    void findByUsernameAndAgeGreaterThan() {
+        // given
+        Member member1 = new Member("AAA", 10);
+        Member member2 = new Member("AAA", 20);
+        repository.save(member1);
+        repository.save(member2);
+
+        // when
+        List<Member> result = repository.findByUsernameAndAgeGreaterThan("AAA", 15);
+
+        // then
+        assertThat(result.get(0).getUsername()).isEqualTo("AAA");
+        assertThat(result.get(0).getAge()).isEqualTo(20);
+        assertThat(result.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void paging() {
+        // given
+        repository.save(new Member("member1", 10));
+        repository.save(new Member("member2", 10));
+        repository.save(new Member("member3", 10));
+        repository.save(new Member("member4", 10));
+        repository.save(new Member("member5", 10));
+
+        int age = 10;
+        int offset = 0;
+        int limit = 3;
+
+        // when
+        List<Member> members = repository.findByPage(age, offset, limit);
+        long totalCount = repository.totalCount(age);
+
+        // then
+        assertThat(members.size()).isEqualTo(limit);
+        assertThat(totalCount).isEqualTo(5);
+    }
+
+    @Test
+    public void bulkAUpdate() {
+        // given
+        repository.save(new Member("member1", 10));
+        repository.save(new Member("member2", 19));
+        repository.save(new Member("member4", 20));
+        repository.save(new Member("member3", 21));
+        repository.save(new Member("member5", 40));
+
+        // when
+        int resultCount = repository.bulkAgePlus(20);
+
+        // then
+        assertThat(resultCount).isEqualTo(3);
     }
 }

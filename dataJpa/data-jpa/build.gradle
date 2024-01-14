@@ -28,6 +28,7 @@ dependencies {
 	testImplementation ('org.springframework.boot:spring-boot-starter-test'){
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+	/*스프링부트 2.2 부터 junit5이기 때문에 4관련된 것은 exclude시킴*/
 }
 
 test{
