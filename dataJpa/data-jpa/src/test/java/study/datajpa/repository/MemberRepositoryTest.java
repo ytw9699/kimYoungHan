@@ -252,6 +252,43 @@ class MemberRepositoryTest {
             System.out.println("member.team = " + member.getTeam().getName());//실제 쿼리 나감
         }
     }
+
+    // dirty checking에서는 원본과 변경 된 객체를 2개 유지
+    // 최적화가 되어있어도 리소스를 더 소모
+    @Test
+    public void queryHint() {
+        // given
+        Member member1 = new Member("member1", 10);
+        repository.save(member1);
+        em.flush();
+        em.clear();
+        // when
+        // Member findMember = repository.findById(member1.getId()).get();
+        Member findMember = repository.findReadOnlyByUsername(member1.getUsername());
+               findMember.setUsername("member2");
+        em.flush();
+    }
+
+    @Test
+    public void testLock() {
+        // given
+        Member member1 = new Member("member1", 10);
+        repository.save(member1);
+        em.flush();
+        em.clear();
+
+        // when
+        List<Member> members = repository.findLockByUsername(member1.getUsername());
+        //     select
+        //        member0_.member_id as member_i1_0_,
+        //        member0_.age as age2_0_,
+        //        member0_.team_id as team_id4_0_,
+        //        member0_.username as username3_0_
+        //    from
+        //        member member0_
+        //    where
+        //        member0_.username=? for update
+    }
 }
 
 

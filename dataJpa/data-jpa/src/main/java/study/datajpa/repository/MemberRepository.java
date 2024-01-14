@@ -2,13 +2,12 @@ package study.datajpa.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.EntityGraph;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import study.datajpa.dto.MemberDto;
 import study.datajpa.entity.Member;
+import javax.persistence.LockModeType;
+import javax.persistence.QueryHint;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -58,6 +57,18 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("select m from Member m")//위와 결과는 같음
     List<Member> findMemberEntityGraph();
 
-    @EntityGraph(attributePaths = { "team" })
-    List<Member> findByUsername2(@Param("username") String username);
+   /* @EntityGraph(attributePaths = { "team" })
+    List<Member> findByUsername(@Param("username") String username);*/
+
+
+    // ===================== JPA Hint & Lock
+    // read only를 모든 메소드에 넣는거 보다, 성능 테스트 후 얻는 이점이 있어야 적용하는걸 추천.
+    //어차피 레디스에 캐시하는단계까지 가야할수도 있음. 이 옵션하나로 해결되는 정도에서만 필요가 있을것
+    @QueryHints(value = {
+            @QueryHint(name = "org.hibernate.readOnly", value = "true")
+    })
+    Member findReadOnlyByUsername(String username);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)// 조회할때 다른애들은 손대지말라고 락걸어버림
+    List<Member> findLockByUsername(String username);
 }
