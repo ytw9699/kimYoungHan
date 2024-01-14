@@ -2,6 +2,7 @@ package study.datajpa.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -45,4 +46,18 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("update Member m set m.age = m.age + 1 where m.age >= :age")
     int bulkAgePlus(@Param("age") int age);
 
+    @Query("select m from Member m left join fetch m.team")
+    List<Member> findMemberFetchJoin();//페치조인은 연관된 팀을 한방쿼리로 모든 데이터 다끌고옴
+
+    // 공통 메소드 오버라이드
+    @Override
+    @EntityGraph(attributePaths = { "team" })
+    List<Member> findAll();//내부적으로 페치조인씀. jpql없이도 객체그래프를 한번에 엮어서 성능최적화해서 가져옴
+
+    @EntityGraph(attributePaths = { "team" })
+    @Query("select m from Member m")//위와 결과는 같음
+    List<Member> findMemberEntityGraph();
+
+    @EntityGraph(attributePaths = { "team" })
+    List<Member> findByUsername2(@Param("username") String username);
 }
