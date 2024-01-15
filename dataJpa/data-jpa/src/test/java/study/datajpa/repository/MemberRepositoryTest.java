@@ -289,6 +289,10 @@ class MemberRepositoryTest {
         //    where
         //        member0_.username=? for update
     }
+    @Test
+    public void testCallCustom() {
+        List<Member> members = repository.findMemberCustom();
+    }
 }
 
 
