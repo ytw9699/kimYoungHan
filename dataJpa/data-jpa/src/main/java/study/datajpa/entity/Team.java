@@ -9,7 +9,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter @Setter
 @Entity
-public class Team {
+public class Team extends JpaBaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "team_id")

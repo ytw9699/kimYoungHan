@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Setter//Setter는 엔티티에 없는게 좋은데 예제라 일단 둠
 @Getter
 @Entity
-public class Member {
+public class Member extends JpaBaseEntity {
     @Id @GeneratedValue
     @Column(name = "member_id")
     private Long id;
