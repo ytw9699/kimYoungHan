@@ -17,6 +17,11 @@ spring:
         #show_sql: true > jpa 실행쿼리 콘솔에 찍음
         format_sql: true
         #쿼리가 한줄로 나오는게 아니라 이쁘게
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 100
 logging.level:
   org.hibernate.SQL: debug # 로그파일로 남길수 있음
   # org.hibernate.type: trace
