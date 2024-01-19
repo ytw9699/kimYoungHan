@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 //스프링 데이터 jpa 레포지토리임
-public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
+public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom, JpaSpecificationExecutor<Member> {
 
     List<Member> findByUsername(String username);//구현하지 않아도 동작. 쿼리메소드 기능!
 
