@@ -3,9 +3,7 @@ package study.datajpa.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
@@ -313,6 +311,37 @@ class MemberRepositoryTest {
         Specification<Member> spec = MemberSpec.username("m1").and(MemberSpec.teamName("teamA"));
         List<Member> result = repository.findAll(spec);
         assertThat(result.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void queryByExample(){
+        //given
+        Team teamA = new Team("teamA");
+        em.persist(teamA);
+
+        Member m1 = new Member("m1", 0, teamA);
+        Member m2 = new Member("m2", 0, teamA);
+
+        em.persist(m1);
+        em.persist(m2);
+
+        em.flush();
+        em.clear();
+
+        //when
+        //Probe : 필드에 데이터가 있는 실제 도메인 객체
+        Member member = new Member("m1");
+        Team team = new Team("teamA");
+        member.setTeam(team);//이렇게하면 inner 조인 하게됨
+
+        ExampleMatcher metcher = ExampleMatcher.matching()
+                .withIgnorePaths("age");//null이 아니면 이렇게 무시시킴
+        
+        Example<Member> example = Example.of(member, metcher);
+
+        List<Member> result = repository.findAll(example);
+
+        assertThat(result.get(0).getUsername()).isEqualTo("m1");
     }
 }
 
