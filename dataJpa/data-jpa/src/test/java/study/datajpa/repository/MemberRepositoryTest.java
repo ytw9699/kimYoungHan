@@ -360,10 +360,13 @@ class MemberRepositoryTest {
         em.clear();
 
         //when
-        List<UsernameOnlyDto> result = repository.findProjectionsByUsername("m1", UsernameOnlyDto.class);
+        List<NestedCloseProjections> result = repository.findProjectionsByUsername("m1", NestedCloseProjections.class);
         System.out.println("result.size() = " + result.size());
-        for (UsernameOnlyDto dto : result) {
-            System.out.println("dto.getUsername() = " + dto.getUsername());
+        for (NestedCloseProjections nestedCloseProjections : result) {
+            String username = nestedCloseProjections.getUsername();
+            System.out.println("username = " + username);
+            String name = nestedCloseProjections.getTeam().getName();
+            System.out.println("name = " + name);
         }
     }
 }
