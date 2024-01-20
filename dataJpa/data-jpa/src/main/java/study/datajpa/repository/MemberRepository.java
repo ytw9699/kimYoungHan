@@ -71,4 +71,6 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)// 조회할때 다른애들은 손대지말라고 락걸어버림
     List<Member> findLockByUsername(String username);
+
+    List<UsernameOnly> findProjectionsByUsername(@Param("username") String username);
 }
