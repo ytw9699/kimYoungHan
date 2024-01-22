@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import study.querydsl.entity.Member;
 import study.querydsl.entity.Team;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static study.querydsl.entity.QMember.member;
@@ -22,8 +24,9 @@ public class QuerydslBasicTest {
 
     @Autowired
     EntityManager em;
-
     JPAQueryFactory queryFactory;
+    @PersistenceUnit
+    EntityManagerFactory emf;
 
     @BeforeEach
     public void beforeEach(){
@@ -260,5 +263,35 @@ public class QuerydslBasicTest {
         }
     }
 
+    @Test
+    public void fetchJoinNo(){
+        em.flush();
+        em.clear();
+
+        Member findMember = queryFactory
+                            .selectFrom(member)
+                            .where(member.username.eq("member1"))
+                            .fetchOne();
+
+        boolean loaded = emf.getPersistenceUnitUtil().isLoaded(findMember.getTeam());//로딩된것인지 여부
+
+        assertThat(loaded).as("페치 조인 미적용").isFalse();
+    }
+
+    @Test
+    public void fetchJoinUse(){
+        em.flush();
+        em.clear();
+
+        Member findMember = queryFactory
+                            .selectFrom(member)
+                            .join(member.team ,team).fetchJoin()//fetchJoin
+                            .where(member.username.eq("member1"))
+                            .fetchOne();
+
+        boolean loaded = emf.getPersistenceUnitUtil().isLoaded(findMember.getTeam());
+
+        assertThat(loaded).as("페치 조인 적용").isTrue();
+    }
 }
 
