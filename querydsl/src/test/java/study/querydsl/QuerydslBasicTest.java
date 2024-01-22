@@ -227,5 +227,38 @@ public class QuerydslBasicTest {
                 .extracting("username")
                 .containsExactly("teamA","teamB");
     }
+
+    @Test //jpql : select m, t from Member m left join m.team t on t.name = 'teamA'
+    public void join_on_filtering(){//회원과 팀을 조인하면서 팀이름이 teama인 팀만 조인, 회원은 모두 조회
+        List<Tuple> result = queryFactory
+                            .select(member, team)
+                            .from(member)
+                            .leftJoin(member.team, team)
+                            .on(team.name.eq("teamA"))
+                            .fetch();
+
+        for (Tuple tuple : result) {
+            System.out.println("tuple = " + tuple);
+        }
+    }
+
+    @Test
+    public void join_on_no_relation(){
+        //연관관계없는 엔티티 외부조인,회원과 팀을 조인하면서 팀이름이 teama인 팀만 조인, 회원은 모두 조회
+        em.persist(new Member("teamA"));
+        em.persist(new Member("teamB"));
+        em.persist(new Member("teamC"));
+
+        List<Tuple> result = queryFactory
+                            .select(member, team)
+                            .from(member)
+                            .leftJoin(team).on(member.username.eq(team.name))//id가 아니라 username으로만 조인
+                            .fetch();
+
+        for (Tuple tuple : result) {
+            System.out.println("tuple = " + tuple);
+        }
+    }
+
 }
 
