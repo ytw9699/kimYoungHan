@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import study.querydsl.dto.MemberDto;
+import study.querydsl.dto.QMemberDto;
 import study.querydsl.dto.UserDto;
 import study.querydsl.entity.Member;
 import study.querydsl.entity.QMember;
@@ -498,6 +499,7 @@ public class QuerydslBasicTest {
     public void findUserDto() {
         QMember memberSub = new QMember("memberSub");
 
+        //이방식은 런타임에 오류를 발견하는 단점
         List<UserDto> result = queryFactory
                 .select(Projections.fields(UserDto.class,
                         member.username.as("name"),
@@ -510,6 +512,19 @@ public class QuerydslBasicTest {
 
         for (UserDto userDto : result) {
             System.out.println("userDto = " + userDto);
+        }
+    }
+
+    @Test
+    public void findDtoByQueryProjection(){//컴파일시점에 오류를 발견하는 장점
+
+        List<MemberDto> result = queryFactory
+                                .select(new QMemberDto(member.username, member.age))
+                                .from(member)
+                                .fetch();
+
+        for (MemberDto memberDto : result) {
+            System.out.println("memberDto = " + memberDto);
         }
     }
 }
