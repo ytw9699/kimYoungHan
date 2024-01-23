@@ -582,5 +582,99 @@ public class QuerydslBasicTest {
     private BooleanExpression allEq(String usernameCond, Integer ageCond) {
         return usernameEq(usernameCond).and(ageEq(ageCond));
     }
+
+    @Test
+    public void bulkUpdate(){
+
+        //member1 = 10 > db member1
+        //member2 = 10 > db member2
+        //member3 = 10 > db member3
+        //member4 = 10 > db member4
+
+        long count = queryFactory
+                .update(member)
+                .set(member.username, "비회원")
+                .where(member.age.lt(28))
+                .execute();
+
+        //member1 = 10 > db 비회원
+        //member2 = 10 > db 비회원
+        //member3 = 10 > db member3
+        //member4 = 10 > db member4
+
+        List<Member> result1 = queryFactory.selectFrom(member).fetch();
+        System.out.println("result1 = " + result1);
+
+        em.flush();
+        em.clear();//벌크연산의 문제점으로 영속성 컨텍스트 초기화해줘야함
+
+        List<Member> result2 = queryFactory.selectFrom(member).fetch();
+        System.out.println("result2 = " + result2);
+
+        assertThat(count).isEqualTo(2);
+    }
+
+    @Test
+    public void bulkAdd(){
+        
+        long count = queryFactory
+                .update(member)
+                .set(member.age, member.age.add(1))//모든 회원 나이 한살 업
+                .execute();
+
+
+        List<Member> result1 = queryFactory.selectFrom(member).fetch();
+        System.out.println("result1 = " + result1);
+
+        em.flush();
+        em.clear();//벌크연산의 문제점으로 영속성 컨텍스트 초기화해줘야함
+
+        List<Member> result2 = queryFactory.selectFrom(member).fetch();
+        System.out.println("result2 = " + result2);
+
+        assertThat(count).isEqualTo(4);
+    }
+
+    @Test
+    public void bulkMultiply(){
+
+        long count = queryFactory
+                .update(member)
+                .set(member.age, member.age.multiply(2))
+                .execute();
+
+
+        List<Member> result1 = queryFactory.selectFrom(member).fetch();
+        System.out.println("result1 = " + result1);
+
+        em.flush();
+        em.clear();
+
+        List<Member> result2 = queryFactory.selectFrom(member).fetch();
+        System.out.println("result2 = " + result2);
+
+        assertThat(count).isEqualTo(4);
+    }
+
+    @Test
+    public void bulkDelete(){
+        long count = queryFactory
+                .delete(member)
+                .where(member.age.gt(18))
+                .execute();
+
+        List<Member> result1 = queryFactory.selectFrom(member).fetch();
+        System.out.println("result1 = " + result1);
+
+        em.flush();
+        em.clear();
+
+        List<Member> result2 = queryFactory.selectFrom(member).fetch();
+        System.out.println("result2 = " + result2);
+
+
+        assertThat(count).isEqualTo(3);
+    }
+
 }
 
