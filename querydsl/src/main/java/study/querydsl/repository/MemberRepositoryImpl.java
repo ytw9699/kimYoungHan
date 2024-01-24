@@ -107,7 +107,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
-        
+
 /*
         long total = queryFactory
                 .select(member)
@@ -131,8 +131,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
                 ageLoe(condition.getAgeLoe())
             );
 
-        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
-
-//        return new PageImpl<>(content, pageable, total);
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);//카운트 쿼리가 필요하면 날리게 최적화
+        //return new PageImpl<>(content, pageable, total);
     }
 }
