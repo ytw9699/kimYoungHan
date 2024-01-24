@@ -95,7 +95,9 @@ public class MemberJpaRepository {
                 .leftJoin(member.team, team)
                 .where(usernameEq(condition.getUsername()),
                         teamNameEq(condition.getTeamName()),
-                        ageBetween(condition.getAgeGoe(),condition.getAgeLoe())
+                        ageGoe(condition.getAgeGoe()),
+                        ageLoe(condition.getAgeLoe())
+                        //ageBetween(condition.getAgeLoe(), condition.getAgeGoe())
                 )
                 .fetch();
     }
@@ -117,7 +119,7 @@ public class MemberJpaRepository {
     }
 
     private BooleanExpression ageBetween(int ageLog, int ageGoe){
-        return ageGoe(ageGoe).and(ageGoe(ageGoe));
+        return ageLoe(ageLog).and(ageGoe(ageGoe));
     }
 
 }
