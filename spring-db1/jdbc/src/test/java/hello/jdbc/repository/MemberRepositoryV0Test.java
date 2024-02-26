@@ -4,6 +4,7 @@ import hello.jdbc.domain.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 class MemberRepositoryV0Test {
@@ -15,5 +16,12 @@ class MemberRepositoryV0Test {
         //save
         Member member = new Member("memberV100", 10000);
         repository.save(member);
+
+        //findById
+        Member findMember = repository.findById(member.getMemberId());
+        log.info("findMember={}", findMember);
+        log.info("member == findMember {}", member == findMember);
+        log.info("member equals findMember {}", member.equals(findMember));
+        assertThat(findMember).isEqualTo(member);//EqualsAndHashCode비교 롬복이 만들어줌 모든필드 비교
     }
 }
