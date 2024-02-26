@@ -47,7 +47,7 @@ public class ConnectionTest {
         Connection con2 = dataSource.getConnection();
         log.info("connection={}, class={}", con1, con1.getClass());
         log.info("connection={}, class={}", con2, con2.getClass());
-        con2.close();//반환
+        con2.close();//close 하면 반환하는 로직이 안에 있음
         log.info("connection={}, class={}", con2, con2.getClass());
     }
 
