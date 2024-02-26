@@ -4,7 +4,8 @@ import hello.jdbc.domain.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.NoSuchElementException;
+import static org.assertj.core.api.Assertions.*;
 
 @Slf4j
 class MemberRepositoryV0Test {
@@ -23,5 +24,15 @@ class MemberRepositoryV0Test {
         log.info("member == findMember {}", member == findMember);
         log.info("member equals findMember {}", member.equals(findMember));
         assertThat(findMember).isEqualTo(member);//EqualsAndHashCode비교 롬복이 만들어줌 모든필드 비교
+
+        //update: money: 10000 -> 20000
+        repository.update(member.getMemberId(), 20000);
+        Member updatedMember = repository.findById(member.getMemberId());
+        assertThat(updatedMember.getMoney()).isEqualTo(20000);
+
+        //delete
+        repository.delete(member.getMemberId());
+        assertThatThrownBy(() -> repository.findById(member.getMemberId()))
+                .isInstanceOf(NoSuchElementException.class);//NoSuchElementException예외가 터지면 성공
     }
 }
