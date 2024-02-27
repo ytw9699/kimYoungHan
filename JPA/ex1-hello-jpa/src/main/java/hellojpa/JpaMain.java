@@ -35,6 +35,7 @@ public class JpaMain {
             System.out.println("findMember.getName() = " + findMember.getName());
 
             //테이블이 아닌 멤버 엔티티 객체를 대상으로 쿼리를 만듬. 객체지향 쿼리
+            //JPQL
             List<Member> result = em.createQuery("select m from Member as m", Member.class)//멤버 객체를 다가져와라
                                     .setFirstResult(0)//0번 부터 8까지 페이징하는데 그것도 방언에 맞춰서 알아서 쿼리 변경
                                     .setMaxResults(8)
@@ -48,10 +49,11 @@ public class JpaMain {
             tx.commit();//jpa가 엔티티를 관리하면서 변경이되었는지 커밋할때 체크함. 변경되면 업데이트하고 커밋함. 이때 쿼리가 날라감
 
         }catch (Exception e){
-            tx.rollback();
+            tx.rollback();//문제가 생기면 롤백
         }finally {
             em.close();//작업끝나면 닫아줘야 데이터베이스 커넥션 반환
         }
-        emf.close();//리소스가 릴리즈 됨. 웹어플리케이션이면 와스가 내려갈때 닫아야함
+        emf.close();
+        //전체 애플리케이션이끝나면 EntityManagerFactory닫음. 리소스가 릴리즈 됨. 웹어플리케이션이면 와스가 내려갈때 닫아야함
     }
 }
