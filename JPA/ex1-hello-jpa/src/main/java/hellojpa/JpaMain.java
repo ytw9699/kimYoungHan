@@ -34,8 +34,7 @@ public class JpaMain {
             System.out.println("findMember.getId() = " + findMember.getId());
             System.out.println("findMember.getName() = " + findMember.getName());
 
-            //테이블이 아닌 멤버 엔티티 객체를 대상으로 쿼리를 만듬. 객체지향 쿼리
-            //JPQL
+            //JPQL : 테이블이 아닌 멤버 엔티티 객체를 대상으로 쿼리를 만듬. 객체지향 쿼리
             List<Member> result = em.createQuery("select m from Member as m", Member.class)//멤버 객체를 다가져와라
                                     .setFirstResult(0)//0번 부터 8까지 페이징하는데 그것도 방언에 맞춰서 알아서 쿼리 변경
                                     .setMaxResults(8)
