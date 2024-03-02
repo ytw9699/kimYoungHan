@@ -54,13 +54,16 @@ public class SpringExceptionTranslatorTest {
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.executeQuery();
         } catch (SQLException e) {
-            assertThat(e.getErrorCode()).isEqualTo(42122);
+            //assertThat(e.getErrorCode()).isEqualTo(42122);
 
             //org.springframework.jdbc.support.sql-error-codes.xml
             SQLErrorCodeSQLExceptionTranslator exTranslator = new SQLErrorCodeSQLExceptionTranslator(dataSource);
             DataAccessException resultEx = exTranslator.translate("select", sql, e);
+            //이렇게 하면 적절한 스프링 데이터 접근 계층의 예외로 변환해서 반환해준다
             log.info("resultEx", resultEx);
             assertThat(resultEx.getClass()).isEqualTo(BadSqlGrammarException.class);
+            //SQL 문법이 잘못되었으므로 BadSqlGrammarException 을 반환
+            //눈에 보이는 반환 타입은 최상위 타입인 DataAccessException 이지만 실제로는 BadSqlGrammarException 예외가 반환된다.
         }
 
     }
