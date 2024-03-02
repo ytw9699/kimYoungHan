@@ -26,14 +26,16 @@ public class MemberServiceV4 {
     }
 
     private void bizLogic(String fromId, String toId, int money) {
+
         Member fromMember = memberRepository.findById(fromId);
         Member toMember = memberRepository.findById(toId);
-
-        try {//사실잡을일이 거의없지만 예시를 보여줌
+        /*try {//사실잡을일이 거의없지만 예시를 보여줌
             memberRepository.update(fromId, fromMember.getMoney() - money);
         } catch (DuplicateKeyException e){//jdbc 던 jpa 던 특정기술에 족송적인게 아니다
             //복구잡업 예시
-        }
+        }*/
+        validation(toMember);
+        memberRepository.update(fromId, fromMember.getMoney() - money);
         memberRepository.update(toId, toMember.getMoney() + money);
     }
 

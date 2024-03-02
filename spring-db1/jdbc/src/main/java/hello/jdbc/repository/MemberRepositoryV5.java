@@ -21,14 +21,14 @@ public class MemberRepositoryV5 implements MemberRepository {
     @Override
     public Member save(Member member) {
         String sql = "insert into member(member_id, money) values (?, ?)";
-        template.update(sql, member.getMemberId(), member.getMoney());
+        template.update(sql, member.getMemberId(), member.getMoney());//저장
         return member;
     }
 
     @Override
     public Member findById(String memberId) {
         String sql = "select * from member where member_id = ?";
-        return template.queryForObject(sql, memberRowMapper(), memberId);
+        return template.queryForObject(sql, memberRowMapper(), memberId);//한건조회
     }
 
     @Override
@@ -44,11 +44,11 @@ public class MemberRepositoryV5 implements MemberRepository {
     }
 
     private RowMapper<Member> memberRowMapper() {
-        return (rs, rowNum) -> {
+        return (rs, rowNum) -> {//ResultSet, 번호
             Member member = new Member();
             member.setMemberId(rs.getString("member_id"));
             member.setMoney(rs.getInt("money"));
             return member;
         };
     }
-}
+ }
