@@ -5,27 +5,28 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-public class JpaMain3 {
+public class JpaMain6 {
     public static void main(String[] args) {
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
-
         EntityManager em = emf.createEntityManager();
-
         EntityTransaction tx = em.getTransaction();
-
-        tx.begin();
-
+                          tx.begin();
         try{
-                Member member = em.find(Member.class, 150L);//영속상태
+            Member member = new Member();
+                   member.setId(1L);
+                   member.setName("Hello1");
+                   member.setRoleType(RoleType.USER);
 
-                member.setName("ZZZZZ");//이렇게 변경만 해도 업데이트 쿼리가 나중에 실행
+            Member member2 = new Member();
+            member2.setId(2L);
+            member2.setName("Hello2");
+            member2.setRoleType(RoleType.ADMIN);
 
-                System.out.println("================");
-                
-                //em.detach(member);//준영속 상태라 업데이트 쿼리가 안나가게됨
-                //em.clear();//영속성 컨텍스트 통째로 날림, 1차 캐시에서도 다 날림
-                tx.commit();
+            em.persist(member);
+            em.persist(member2);
+
+            tx.commit();
 
         }catch (Exception e){
             tx.rollback();

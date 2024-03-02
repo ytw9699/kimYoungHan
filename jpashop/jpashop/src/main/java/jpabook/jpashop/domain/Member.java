@@ -9,7 +9,7 @@ import javax.persistence.Id;
 public class Member {
     @Id
     @GeneratedValue//기본 오토
-    @Column(name = "MEMBER_ID")
+    @Column(name = "MEMBER_ID")//MEMBER_ID를 소문자로 하는게 관행이 회사도 있음
     private Long id;
     private String name;
     private String city;

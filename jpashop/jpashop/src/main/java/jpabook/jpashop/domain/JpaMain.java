@@ -20,6 +20,7 @@ public class JpaMain {
             Long memberId = order.getMemberId();
 
             Member member = em.find(Member.class, memberId);
+            //멤버를 가져오는게.. 객체지향적이지않음 .왜냐면 참조로 안찾음. 관계형디비를 객체에 맞춘거임
 
             System.out.println(member); //테이블 중심 설계의 문제점..
 
