@@ -14,8 +14,8 @@ public class Member2 {
     /*@Column(name = "TEAM_ID")
     private Long teamId;*/
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "TEAM_ID")
+    @ManyToOne(fetch = LAZY)//멤버입장에서 many to one
+    @JoinColumn(name = "TEAM_ID")//멤버테이블의 외래키와 매핑
     private Team team;//멤버는 n 이고 팀은 1이다.
 
     public Long getId() {
