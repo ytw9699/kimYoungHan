@@ -26,7 +26,7 @@ public class JdbcTemplateItemRepositoryV1 implements ItemRepository {
     private final JdbcTemplate template;
 
     public JdbcTemplateItemRepositoryV1(DataSource dataSource) {
-        log.info(dataSource.getClass().getName());
+        log.info(dataSource.getClass().getName());//HikariDataSource
         this.template = new JdbcTemplate(dataSource);//이렇게 안하고 빈등록하고 주입받아도됨
     }
 
