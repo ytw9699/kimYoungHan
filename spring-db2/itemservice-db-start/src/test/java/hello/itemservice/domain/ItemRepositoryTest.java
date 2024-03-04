@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Transactional
 @SpringBootTest
 class ItemRepositoryTest {
 
@@ -23,15 +25,14 @@ class ItemRepositoryTest {
     //인터페이스를 대상으로 테스트하면 향후 다른 구현체로 변경되었을 때 해당
     //구현체가 잘 동작하는지 같은 테스트로 편리하게 검증할 수 있다
 
-    @Autowired
+    /*@Autowired
     PlatformTransactionManager transactionManager;
-    TransactionStatus status;
+    TransactionStatus status;*/
 
-    @BeforeEach
+   /* @BeforeEach
     void beforeEach(){
-        status = transactionManager.getTransaction(new DefaultTransactionDefinition());
-        //트랜잭션 시작
-    }
+        status = transactionManager.getTransaction(new DefaultTransactionDefinition());//트랜잭션 시작
+    }*/
 
     @AfterEach//테스트는 서로 영향을 주면 안된다. 따라서 각각의 테스트가 끝나고 나면 저장한 데이터를 제거해야 한다
     void afterEach() {
@@ -41,7 +42,7 @@ class ItemRepositoryTest {
             ((MemoryItemRepository) itemRepository).clearStore();
         }
         //트랜잭션 롤백
-        transactionManager.rollback(status);
+        //transactionManager.rollback(status);
     }
 
     @Test
