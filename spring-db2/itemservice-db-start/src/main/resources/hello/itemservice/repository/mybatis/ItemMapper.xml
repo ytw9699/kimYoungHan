@@ -30,7 +30,9 @@
                 and item_name like concat('%', #{itemName}, '%')
             </if>
             <if test="maxPrice != null">
-                and price &lt;= #{maxPrice}
+                <![CDATA[
+                    and price <= #{maxPrice}
+                 ]]>
             </if>
         </where>
     </select>
