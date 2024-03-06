@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-
 @Service
 @RequiredArgsConstructor//사실 서비스는 인터페이스 구현 잘안함 바뀔일이 없기 때문에 하지만 여기선 v1,2로 이어지기 때문
 public class ItemServiceV1 implements ItemService {//단순한 위임뿐
