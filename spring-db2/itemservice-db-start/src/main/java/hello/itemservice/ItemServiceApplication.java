@@ -15,7 +15,8 @@ import javax.sql.DataSource;
 //@Import(JdbcTemplateV1Config.class)
 //@Import(JdbcTemplateV2Config.class)
 //@Import(JdbcTemplateV3Config.class)
-@Import(MyBatisConfig.class)
+//@Import(MyBatisConfig.class)
+@Import(JpaConfig.class)
 @Slf4j
 @SpringBootApplication(scanBasePackages = "hello.itemservice.web")//이패키지 이하만 컴포넌트 스캔하고 나머지 수동등록
 public class ItemServiceApplication {
