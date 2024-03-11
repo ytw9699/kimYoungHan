@@ -44,6 +44,7 @@ public class InternalCallV2Test {
 
     @Slf4j
     @RequiredArgsConstructor
+
     static class CallService {
 
         private final InternalService internalService;
