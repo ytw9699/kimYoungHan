@@ -15,7 +15,7 @@ public class LogRepository {
 
     private final EntityManager em;
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)//별도의 트랜잭션 영역 생성
     public void save(Log logMessage) {
         log.info("log 저장");
         em.persist(logMessage);
