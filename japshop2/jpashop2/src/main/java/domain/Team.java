@@ -13,7 +13,7 @@ public class Team {
     private String name;
     
     //팀은 1 멤버는 다  > 1:다
-    @OneToMany(mappedBy = "team")//멤버테이블의 변수명. mappedBy의 정체는
+    @OneToMany(mappedBy = "team")//멤버테이블의 변수명. 주인의 반대편 가짜 매핑. 읽기만 가능
     private List<Member2> members = new ArrayList<>();//add 할때 null포인트 안뜨게 초기화
 
     public List<Member2> getMembers() {
